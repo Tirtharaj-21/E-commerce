@@ -1,0 +1,111 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Poppins", sans-serif;
+}
+.navbar {
+  width: 100%;
+  padding: 16px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px -2px black;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav-logo p {
+  color: #171717;
+  font-size: 38px;
+  font-weight: 600;
+}
+.nav-menu {
+  /* width: 50%;
+  min-height: 30px; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  color: #626262;
+  font-size: 20px;
+  font-weight: 500;
+}
+.nav-menu li {
+  list-style: none;
+  cursor: pointer;
+}
+.nav-menu li:hover {
+  color: #ff4141;
+  transition: 0.3s;
+}
+.nav-menu hr {
+  border: none;
+  width: 90%;
+  height: 3px;
+  border-radius: 10px;
+  background-color: #ff4141;
+  transition: all 0.8s ease;
+}
+.nav-login-cart {
+  display: flex;
+  align-items: center;
+  gap: 45px;
+}
+.nav-login-cart button {
+  width: 147px;
+  height: 50px;
+  outline: none;
+  border: 1px solid #7a7a7a;
+  border-radius: 75px;
+  color: #515151;
+  font-size: 20px;
+  font-weight: 500;
+  background-color: white;
+  cursor: pointer;
+}
+.nav-login-cart button:hover {
+  border-color: #ff4141;
+  color: #ff4141;
+  transition: 0.3s;
+}
+.nav-login-cart button:active {
+  background: #f3f3f3;
+}
+.nav-auth {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.nav-auth button {
+  width: auto;
+  padding: 0 20px;
+}
+.nav-logout-btn {
+  color: #ff4141;
+  border-color: #ff4141;
+}
+#nav-cart {
+  position: relative;
+}
+
+.nav-cart-count {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: white;
+  background-color: red;
+  font-size: 14px;
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  /* right: 10px → element stays 10px inside from right
+  right: -10px → element goes outside to the right */
+}
