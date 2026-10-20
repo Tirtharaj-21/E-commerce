@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./CSS/LoginSignup.css";
 import { useAuth } from "../Context/AuthContext";
 import { ApiError } from "../api/apiClient";
 
-const LoginSignup = () => {
-  const [mode, setMode] = useState("login"); // "login" | "signup"
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+export default function LoginSignup() {
+  const [mode, setMode] = useState("login");
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const [agreed, setAgreed] = useState(false);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -15,39 +19,50 @@ const LoginSignup = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleChange = (e) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleChange = (event) => {
+    setForm((previous) => ({
+      ...previous,
+      [event.target.name]: event.target.value,
+    }));
   };
 
   const redirectAfterAuth = (user) => {
-    const from = location.state?.from?.pathname;
-    if (from) {
-      navigate(from, { replace: true });
+    const destination = location.state?.from?.pathname;
+
+    if (destination) {
+      navigate(destination, { replace: true });
       return;
     }
-    navigate(user.role === "ADMIN" ? "/admin/dashboard" : "/dashboard", {
+
+    navigate(user?.role === "ADMIN" ? "/admin/dashboard" : "/dashboard", {
       replace: true,
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     setError("");
 
     if (mode === "signup" && !agreed) {
-      setError("Please agree to the terms of use & privacy policy.");
+      setError("Please agree to the terms of use and privacy policy.");
       return;
     }
 
     setSubmitting(true);
+
     try {
       const user =
         mode === "login"
           ? await login(form.email, form.password)
           : await signup(form.name, form.email, form.password);
+
       redirectAfterAuth(user);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Something went wrong.");
+      setError(
+        err instanceof ApiError
+          ? err.message
+          : err?.message || "Something went wrong. Please try again.",
+      );
     } finally {
       setSubmitting(false);
     }
@@ -57,18 +72,20 @@ const LoginSignup = () => {
     <div className="loginsignup">
       <div className="loginsignup-container">
         <h1>{mode === "login" ? "Login" : "Sign up"}</h1>
+
         <form onSubmit={handleSubmit}>
           <div className="loginsignup-fields">
             {mode === "signup" && (
               <input
                 type="text"
                 name="name"
-                placeholder="your name"
+                placeholder="Your name"
                 value={form.name}
                 onChange={handleChange}
                 required
               />
             )}
+
             <input
               type="email"
               name="email"
@@ -77,6 +94,7 @@ const LoginSignup = () => {
               onChange={handleChange}
               required
             />
+
             <input
               type="password"
               name="password"
@@ -88,10 +106,32 @@ const LoginSignup = () => {
             />
           </div>
 
-          {error && <p className="loginsignup-error">{error}</p>}
+          {error && (
+            <p className="loginsignup-error" role="alert">
+              {error}
+            </p>
+          )}
+
+          {mode === "signup" && (
+            <div className="loginsignup-agree">
+              <input
+                type="checkbox"
+                id="agree"
+                checked={agreed}
+                onChange={(event) => setAgreed(event.target.checked)}
+              />
+              <label htmlFor="agree">
+                By continuing, I agree to the terms of use and privacy policy.
+              </label>
+            </div>
+          )}
 
           <button type="submit" disabled={submitting}>
-            {submitting ? "Please wait..." : "Continue"}
+            {submitting
+              ? "Please wait..."
+              : mode === "login"
+                ? "Login"
+                : "Create Account"}
           </button>
         </form>
 
@@ -99,30 +139,34 @@ const LoginSignup = () => {
           {mode === "login" ? (
             <>
               Don't have an account?{" "}
-              <span onClick={() => setMode("signup")}>Sign up here</span>
+              <span
+                onClick={() => {
+                  setError("");
+                  setMode("signup");
+                }}
+              >
+                Sign up here
+              </span>
             </>
           ) : (
             <>
               Already have an account?{" "}
-              <span onClick={() => setMode("login")}>Login here</span>
+              <span
+                onClick={() => {
+                  setError("");
+                  setMode("login");
+                }}
+              >
+                Login here
+              </span>
             </>
           )}
         </p>
 
-        {mode === "signup" && (
-          <div className="loginsignup-agree">
-            <input
-              type="checkbox"
-              checked={agreed}
-              onChange={(e) => setAgreed(e.target.checked)}
-              id="agree"
-            />
-            <p>By continuing, i agree to the terms of use & privacy policy.</p>
-          </div>
-        )}
+        <p>
+          <Link to="/signup">Open the separate signup page</Link>
+        </p>
       </div>
     </div>
   );
-};
-
-export default LoginSignup;
+}

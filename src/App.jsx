@@ -7,97 +7,135 @@ import {
   useLocation,
 } from "react-router-dom";
 
-// Components
 import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer/Footer";
 
-// Pages
+import { AuthProvider, useAuth } from "./Context/AuthContext";
+import { Routhpath } from "./Components/Routh/Routhpath";
+
 import Shop from "./Pages/Shop";
 import ShopCategory from "./Pages/ShopCategory";
 import Product from "./Pages/Product";
 import Cart from "./Pages/Cart";
+import Signup from "./Pages/Signup";
 import LoginSignup from "./Pages/LoginSignup";
 
-// Dashboard
 import AdminDashboard from "./Pages/Dashboard/AdminDashboard";
 import CustomerDashboard from "./Pages/Dashboard/CustomerDashboard";
 
-// Authentication
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 
-// Assets
 import men_banner from "./Components/Assets/banner_mens.png";
 import women_banner from "./Components/Assets/banner_women.png";
 import kid_banner from "./Components/Assets/banner_kids.png";
 
-// Routes
-import { Routhpath } from "./Components/Routh/Routhpath";
-
 function AppContent() {
+  const { isLoggedIn } = useAuth();
   const location = useLocation();
 
-  // Login page should not show Navbar/Footer
-  const isLoginPage = location.pathname === Routhpath.login;
+  const isLoginPage =
+    location.pathname === Routhpath.login || location.pathname === "/login";
+
+  const isSignupPage = location.pathname === "/signup";
+  const isAuthPage = isLoginPage || isSignupPage;
 
   return (
     <>
-      {/* Navbar will not appear on Login page */}
-      {!isLoginPage && <Navbar />}
+      {!isAuthPage && isLoggedIn && <Navbar />}
 
       <Routes>
-        {/* =========================================
-            APPLICATION ENTRY POINT
-            "/" → "/login"
-        ========================================== */}
-        <Route path="/" element={<Navigate to={Routhpath.login} replace />} />
+        {/* Default route */}
+        <Route
+          path="/"
+          element={
+            isLoggedIn ? (
+              <Navigate to={Routhpath.shop} replace />
+            ) : (
+              <Navigate to={Routhpath.login} replace />
+            )
+          }
+        />
 
-        {/* =========================================
-            LOGIN
-        ========================================== */}
-        <Route path={Routhpath.login} element={<LoginSignup />} />
+        {/* Authentication */}
+        <Route
+          path="/login"
+          element={
+            isLoggedIn ? (
+              <Navigate to={Routhpath.shop} replace />
+            ) : (
+              <LoginSignup />
+            )
+          }
+        />
 
-        {/* =========================================
-            SHOP
-        ========================================== */}
-        <Route path={Routhpath.shop} element={<Shop />} />
+        <Route
+          path="/signup"
+          element={
+            isLoggedIn ? <Navigate to={Routhpath.shop} replace /> : <Signup />
+          }
+        />
 
-        {/* =========================================
-            MEN
-        ========================================== */}
+        {/* Shop */}
+        <Route
+          path={Routhpath.shop}
+          element={
+            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
+              <Shop />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Men */}
         <Route
           path={Routhpath.men}
-          element={<ShopCategory banner={men_banner} category="men" />}
+          element={
+            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
+              <ShopCategory banner={men_banner} category="men" />
+            </ProtectedRoute>
+          }
         />
 
-        {/* =========================================
-            WOMEN
-        ========================================== */}
+        {/* Women */}
         <Route
           path={Routhpath.women}
-          element={<ShopCategory banner={women_banner} category="women" />}
+          element={
+            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
+              <ShopCategory banner={women_banner} category="women" />
+            </ProtectedRoute>
+          }
         />
 
-        {/* =========================================
-            KIDS
-        ========================================== */}
+        {/* Kids */}
         <Route
           path={Routhpath.kids}
-          element={<ShopCategory banner={kid_banner} category="kid" />}
+          element={
+            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
+              <ShopCategory banner={kid_banner} category="kid" />
+            </ProtectedRoute>
+          }
         />
 
-        {/* =========================================
-            PRODUCT DETAILS
-        ========================================== */}
-        <Route path="/product/:productId" element={<Product />} />
+        {/* Product details */}
+        <Route
+          path="/product/:productId"
+          element={
+            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
+              <Product />
+            </ProtectedRoute>
+          }
+        />
 
-        {/* =========================================
-            CART
-        ========================================== */}
-        <Route path={Routhpath.cart} element={<Cart />} />
+        {/* Cart */}
+        <Route
+          path={Routhpath.cart}
+          element={
+            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
 
-        {/* =========================================
-            CUSTOMER DASHBOARD
-        ========================================== */}
+        {/* Customer dashboard */}
         <Route
           path="/dashboard"
           element={
@@ -107,9 +145,7 @@ function AppContent() {
           }
         />
 
-        {/* =========================================
-            ADMIN DASHBOARD
-        ========================================== */}
+        {/* Admin dashboard */}
         <Route
           path="/admin/dashboard"
           element={
@@ -119,15 +155,19 @@ function AppContent() {
           }
         />
 
-        {/* =========================================
-            UNKNOWN URL
-            Redirect to Login
-        ========================================== */}
-        <Route path="*" element={<Navigate to={Routhpath.login} replace />} />
+        {/* Unknown URL */}
+        <Route
+          path="*"
+          element={
+            <Navigate
+              to={isLoggedIn ? Routhpath.shop : Routhpath.login}
+              replace
+            />
+          }
+        />
       </Routes>
 
-      {/* Footer will not appear on Login page */}
-      {!isLoginPage && <Footer />}
+      {!isAuthPage && isLoggedIn && <Footer />}
     </>
   );
 }
@@ -135,7 +175,9 @@ function AppContent() {
 function App() {
   return (
     <Router>
-      <AppContent />
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </Router>
   );
 }

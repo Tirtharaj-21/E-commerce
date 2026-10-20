@@ -8,44 +8,80 @@ export function AuthProvider({ children }) {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Restore session on first load
+  // Restore the saved session when the application starts.
   useEffect(() => {
-    const stored = getStoredAuth();
-    if (stored?.token && stored?.user) {
-      setToken(stored.token);
-      setUser(stored.user);
+    try {
+      const stored = getStoredAuth();
+
+      if (stored?.token && stored?.user) {
+        setToken(stored.token);
+        setUser(stored.user);
+      }
+    } catch (error) {
+      console.error("Unable to restore authentication session:", error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
 
+  // Login through the backend API.
   const login = async (email, password) => {
     const data = await api.login(email, password);
+
+    if (!data?.token || !data?.user) {
+      throw new Error("Invalid login response from the server.");
+    }
+
+    setStoredAuth({
+      token: data.token,
+      user: data.user,
+    });
+
     setToken(data.token);
     setUser(data.user);
-    setStoredAuth({ token: data.token, user: data.user });
+
     return data.user;
   };
 
+  // Register through the backend API.
   const signup = async (name, email, password) => {
     const data = await api.signup(name, email, password);
+
+    if (!data?.token || !data?.user) {
+      throw new Error("Signup did not return an authenticated user and token.");
+    }
+
+    setStoredAuth({
+      token: data.token,
+      user: data.user,
+    });
+
     setToken(data.token);
     setUser(data.user);
-    setStoredAuth({ token: data.token, user: data.user });
+
     return data.user;
   };
 
+  // Clear the local session.
   const logout = () => {
+    setStoredAuth(null);
     setToken(null);
     setUser(null);
-    setStoredAuth(null);
   };
+
+  const isAuthenticated = Boolean(token && user);
 
   const value = {
     user,
     token,
     role: user?.role || null,
-    isAuthenticated: Boolean(token && user),
+
+    isAuthenticated,
+    isLoggedIn: isAuthenticated,
+
     loading,
+    isLoading: loading,
+
     login,
     signup,
     logout,
@@ -55,9 +91,11 @@ export function AuthProvider({ children }) {
 }
 
 export function useAuth() {
-  const ctx = useContext(AuthContext);
-  if (!ctx) {
-    throw new Error("useAuth must be used within an AuthProvider");
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider.");
   }
-  return ctx;
+
+  return context;
 }
