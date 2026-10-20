@@ -8,26 +8,28 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const { signup } = useAuth();
   const navigate = useNavigate();
 
-  const handleSignup = (event) => {
+  const handleSignup = async (event) => {
     event.preventDefault();
     setError("");
+    setSubmitting(true);
 
-    const result = signup(name, email, password);
+    try {
+      // signup() is async: it creates the account and logs the user in.
+      const user = await signup(name, email, password);
 
-    if (!result.success) {
-      setError(result.message);
-      return;
+      navigate(user?.role === "ADMIN" ? "/admin/dashboard" : "/shop", {
+        replace: true,
+      });
+    } catch (err) {
+      setError(err?.message || "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
     }
-
-    // Signup succeeded. Ask the user to log in.
-    navigate("/login", {
-      replace: true,
-      state: { email: email.trim() },
-    });
   };
 
   return (
@@ -63,9 +65,15 @@ export default function Signup() {
             />
           </div>
 
-          {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && (
+            <p style={{ color: "red" }} role="alert">
+              {error}
+            </p>
+          )}
 
-          <button type="submit">Create Account</button>
+          <button type="submit" disabled={submitting}>
+            {submitting ? "Please wait..." : "Create Account"}
+          </button>
         </form>
 
         <p className="loginsignup-login">
