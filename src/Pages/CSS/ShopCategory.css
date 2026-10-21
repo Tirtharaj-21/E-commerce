@@ -1,59 +1,92 @@
 .shop-category {
   width: 100%;
   background: #f9f9f9;
+  padding-bottom: 20px;
 }
+
 .shopcategory-banner {
   display: block;
-  /* margin: 30px auto; */
   width: 100%;
-  /* max-width: 1200px; */
-  border-radius: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
+
 .shopcatogory-indexsort {
+  max-width: 1280px;
+  margin: 0 auto 28px;
+  padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 25px;
   flex-wrap: wrap;
   gap: 10px;
 }
-.shopcategory-sort {
-  padding: 10px 20px;
-  border-radius: 40px;
-  border: 1px solid #888;
-  cursor: pointer;
-}
+
 .shopcatogory-indexsort p {
   font-size: 16px;
   color: #555;
 }
+
 .shopcatogory-indexsort span {
   font-weight: 600;
   color: #222;
 }
-.shopcategory-products {
-  margin: 20px 170px;
-  display: grid;
-  /* grid-template-columns: 1fr 1fr 1fr 1fr;
-  row-gap: 80px; */
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
+
+.shopcategory-sort {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 40px;
+  border: 1px solid #bbb;
+  background: #fff;
+  cursor: pointer;
 }
+
+.shopcategory-products {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 40px 28px;
+}
+
 .shopcategory-loadmore {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 200px;
-  height: 60px;
+  height: 56px;
   border-radius: 75px;
   background: #ededed;
-  margin: 80px auto;
+  margin: 60px auto;
   color: #787878;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
+
+.shopcategory-loadmore:hover {
+  background: #e0e0e0;
+}
+
 body {
   overflow-x: hidden;
+}
+
+@media (max-width: 600px) {
+  .shopcategory-banner {
+    margin-bottom: 24px;
+  }
+
+  .shopcatogory-indexsort,
+  .shopcategory-products {
+    padding: 0 16px;
+  }
+
+  .shopcategory-products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 14px;
+  }
 }

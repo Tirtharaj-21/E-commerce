@@ -2,24 +2,23 @@ import React from "react";
 import "./NewCollections.css";
 import New_collection from "../Assets/new_collections";
 import Item from "../Item/Item";
+
 const NewCollections = () => {
   return (
     <div className="new-collection">
-      <h1>New Collection</h1>
+      <h1>NEW COLLECTION</h1>
       <hr />
       <div className="collections">
-        {New_collection.map((item, i) => {
-          return (
-            <Item
-              key={i}
-              id={item.id}
-              name={item.name}
-              image={item.image}
-              new_price={item.new_price}
-              old_price={item.old_price}
-            />
-          );
-        })}
+        {New_collection.map((item) => (
+          <Item
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            image={item.image}
+            new_price={item.new_price}
+            old_price={item.old_price}
+          />
+        ))}
       </div>
     </div>
   );

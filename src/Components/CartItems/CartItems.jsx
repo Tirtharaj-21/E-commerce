@@ -1,13 +1,11 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../../Context/ShopContext";
-import remove_icon from "../Assets/cart_cross_icon.png";
 import "./cartItems.css";
+
 const CartItems = () => {
   const { getTotalCartAmount, all_product, cartItems, removeFromCart } =
     useContext(ShopContext);
 
-  console.log(all_product); // 👈 ADD THIS
-  console.log(cartItems); // 👈 AND THIS
   return (
     <div className="cartitems">
       <div className="cartitems-format-main">
@@ -26,19 +24,18 @@ const CartItems = () => {
               <div className="cartitems-format cartitems-format-main">
                 <img src={e.image} alt="" className="cartitems-product-icon" />
                 <p>{e.name}</p>
-                <p>{e.new_price}</p>
+                <p>${e.new_price}</p>
                 <button className="cartitems-quantity">
                   {cartItems[e.id]}
                 </button>
                 <p>${e.new_price * cartItems[e.id]}</p>
-                <img
-                  className="cartitems-remove-icon"
-                  src={remove_icon}
-                  alt=""
-                  onClick={() => {
-                    removeFromCart(e.id);
-                  }}
-                />
+                <button
+                  className="cartitems-minus-btn"
+                  aria-label="Decrease quantity"
+                  onClick={() => removeFromCart(e.id)}
+                >
+                  −
+                </button>
               </div>
               <hr />
             </div>

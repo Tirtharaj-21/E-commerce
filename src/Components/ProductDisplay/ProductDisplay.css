@@ -1,3 +1,25 @@
+.productdisplay-right-sizes div.size-active {
+  border: 2px solid #ff4141;
+  background: #fff3f3;
+}
+
+.size-error {
+  color: #ff4141;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.productdisplay-buttons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.go-to-cart-btn {
+  background: #16a34a !important;
+}
+
+
 .productdisplay {
   display: flex;
   margin: 0px 170px;

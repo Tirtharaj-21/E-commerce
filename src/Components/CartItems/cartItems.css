@@ -10,6 +10,47 @@ body {
   background: #e2e2e2;
   border: 0;
 }
+.cartitems-minus-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ebebeb;
+  border-radius: 50%;
+  background: #fff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  margin: auto;
+  transition: all 0.2s;
+}
+.cartitems-format .cartitems-minus-btn {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ebebeb;
+  border-radius: 50%;
+  background: #fff;
+  color: #333;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  justify-self: start;   /* stick to the left edge of the column, like the header text */
+  margin: 0 0 0 15px;    /* "Remove" is ~62px wide, so (62 - 32) / 2 = 15px centers it under the text */
+  transition: all 0.2s;
+}
+
+.cartitems-format .cartitems-minus-btn:hover {
+  background: #ff4141;
+  border-color: #ff4141;
+  color: #fff;
+}
+.cartitems-minus-btn:hover {
+  background: #ff4141;
+  border-color: #ff4141;
+  color: #fff;
+}
 .cartitems-format-main {
   display: grid;
   grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 0.5fr;

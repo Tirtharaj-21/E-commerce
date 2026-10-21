@@ -21,3 +21,34 @@
   display: flex;
   gap: 30px;
 }
+.popular {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 60px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.popular h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #171717;
+  margin: 0;
+}
+
+.popular hr {
+  width: 80px;
+  height: 5px;
+  border: none;
+  border-radius: 10px;
+  background: #ff4141;
+  margin: 14px 0 48px;
+}
+
+.popular-item {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 32px 28px;
+}
