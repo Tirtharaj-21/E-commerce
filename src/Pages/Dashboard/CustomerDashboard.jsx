@@ -23,7 +23,7 @@ export default function CustomerDashboard() {
           setError(
             err instanceof ApiError
               ? err.message
-              : "Failed to load your dashboard."
+              : "Failed to load your dashboard.",
           );
         }
       } finally {
