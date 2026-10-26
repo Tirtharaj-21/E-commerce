@@ -142,3 +142,141 @@ body {
   color: white;
   cursor: pointer;
 }
+/* Laptops and tablets: smaller margins and tighter columns */
+@media (max-width: 1024px) {
+  .cartitems {
+    margin: 60px 40px;
+  }
+
+  .cartitems-format-main {
+    gap: 10px;
+    font-size: 15px;
+  }
+
+  .cartitems-format {
+    font-size: 15px;
+  }
+
+  .cartitems-down {
+    margin: 60px 0;
+    gap: 30px;
+  }
+
+  .cartitems-promobox input {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* Phones: each cart row becomes a card */
+@media (max-width: 768px) {
+  .cartitems {
+    margin: 24px 12px;
+  }
+
+  /* Hide the table header row and the line under it (rows are not direct children, so they stay) */
+  .cartitems > .cartitems-format-main,
+  .cartitems > hr {
+    display: none;
+  }
+
+  .cartitems-format.cartitems-format-main {
+    grid-template-columns: 72px 1fr auto;
+    grid-template-areas:
+      "img name  remove"
+      "img price remove"
+      "img qty   total";
+    gap: 6px 12px;
+    padding: 14px 0;
+    font-size: 14px;
+  }
+
+  .cartitems-format .cartitems-product-icon {
+    grid-area: img;
+    width: 72px;
+    height: auto;
+    align-self: start;
+  }
+
+  .cartitems-format > p:nth-child(2) {
+    grid-area: name;
+    font-weight: 600;
+  }
+
+  .cartitems-format > p:nth-child(3) {
+    grid-area: price;
+    color: #666;
+  }
+
+  .cartitems-format > p:nth-child(3)::before {
+    content: "Price: ";
+    font-weight: 400;
+  }
+
+  .cartitems-format .cartitems-quantity {
+    grid-area: qty;
+    justify-self: start;
+    width: auto;
+    height: 34px;
+    padding: 0 12px;
+    font-size: 14px;
+  }
+
+  .cartitems-format .cartitems-quantity::before {
+    content: "Qty: ";
+    font-weight: 400;
+  }
+
+  .cartitems-format > p:nth-child(5) {
+    grid-area: total;
+    justify-self: end;
+    font-weight: 600;
+  }
+
+  .cartitems-format > p:nth-child(5)::before {
+    content: "Total: ";
+    font-weight: 400;
+  }
+
+  .cartitems-format .cartitems-minus-btn {
+    grid-area: remove;
+    justify-self: end;
+    align-self: start;
+    margin: 0;
+  }
+
+  /* Totals and promo code stack vertically */
+  .cartitems-down {
+    flex-direction: column;
+    margin: 32px 0;
+    gap: 36px;
+  }
+
+  .cartitems-total {
+    gap: 24px;
+  }
+
+  .cartitems-total h1 {
+    font-size: 24px;
+  }
+
+  .cartitems-total button {
+    width: 100%;
+  }
+
+  .cartitems-promobox {
+    max-width: 100%;
+    padding-left: 14px;
+  }
+
+  .cartitems-promobox input {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+  }
+
+  .cartitems-promobox button {
+    width: 110px;
+    border: none;
+  }
+}

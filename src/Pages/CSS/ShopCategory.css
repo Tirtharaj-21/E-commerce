@@ -90,3 +90,46 @@ body {
     gap: 24px 14px;
   }
 }
+@media (max-width: 600px) {
+  .shopcategory-banner {
+    margin-bottom: 20px;
+  }
+
+  .shopcatogory-indexsort,
+  .shopcategory-products {
+    padding: 0 12px;
+  }
+
+  .shopcatogory-indexsort {
+    margin-bottom: 18px;
+  }
+
+  .shopcatogory-indexsort p {
+    font-size: 14px;
+  }
+
+  .shopcategory-sort {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .shopcategory-products {
+    /* minmax(0, 1fr) stops wide images or long names from stretching a column past the screen */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 12px;
+  }
+
+  .shopcategory-loadmore {
+    width: 160px;
+    height: 48px;
+    margin: 36px auto;
+    font-size: 15px;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+  .shopcategory-products {
+    gap: 16px 8px;
+  }
+}

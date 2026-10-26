@@ -26,3 +26,36 @@
   padding: 48px;
   padding-bottom: 70px;
 }
+
+
+/* Laptops and tablets */
+@media (max-width: 1024px) {
+  .descriptionbox {
+    margin: 70px 40px;
+  }
+
+  .descriptionbox-description {
+    padding: 32px;
+  }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  .descriptionbox {
+    margin: 32px 12px;
+  }
+
+  .descriptionbox-nav-box {
+    flex: 1;            /* the two tabs share the width instead of fixed 171px each */
+    width: auto;
+    height: 52px;
+    font-size: 14px;
+  }
+
+  .descriptionbox-description {
+    padding: 20px 16px 28px;
+    gap: 16px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}

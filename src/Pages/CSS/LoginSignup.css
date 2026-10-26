@@ -73,3 +73,74 @@
   font-size: 18px;
   font-weight: 500;
 }
+/* Checkbox: keep it a fixed size so it doesn't squash next to the long label */
+.loginsignup-agree input {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Tablets and below */
+@media (max-width: 768px) {
+  .loginsignup {
+    box-sizing: border-box;
+    min-height: 100vh;
+    min-height: 100dvh;      /* accounts for the mobile browser address bar */
+    padding: 90px 16px 32px; /* top space for your navbar, side gutters */
+  }
+
+  .loginsignup-container {
+    box-sizing: border-box;
+    padding: 32px 28px;
+  }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+  .loginsignup {
+    padding: 80px 12px 24px;
+  }
+
+  .loginsignup-container {
+    padding: 24px 18px;
+  }
+
+  .loginsignup-container h1 {
+    font-size: 28px;
+    margin: 8px 0 0;
+  }
+
+  .loginsignup-fields {
+    gap: 14px;
+    margin-top: 20px;
+  }
+
+  .loginsignup-fields input {
+    height: 52px;
+    padding-left: 14px;
+    font-size: 16px;   /* 16px or more stops iPhones from zooming in on focus */
+  }
+
+  .loginsignup-container button {
+    height: 52px;
+    font-size: 18px;
+    margin-top: 22px;
+  }
+
+  .loginsignup-login {
+    font-size: 15px;
+    margin-top: 16px;
+  }
+
+  .loginsignup-agree {
+    gap: 12px;
+    margin-top: 18px;
+    font-size: 14px;
+    align-items: flex-start;
+  }
+
+  .loginsignup-error {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+}

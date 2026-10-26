@@ -8,3 +8,29 @@
   margin: 60px 170px;
   text-transform: capitalize;
 }
+.breadcrum img {
+  flex-shrink: 0;      /* arrow icons keep their size when the text is long */
+}
+
+/* Laptops and tablets */
+@media (max-width: 1024px) {
+  .breadcrum {
+    margin: 40px 48px;
+  }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  .breadcrum {
+    margin: 16px 12px;
+    font-size: 13px;
+    gap: 6px;
+    flex-wrap: wrap;   /* a long product name wraps instead of overflowing */
+    line-height: 1.4;
+  }
+
+  .breadcrum img {
+    height: 10px;
+    width: auto;
+  }
+}
