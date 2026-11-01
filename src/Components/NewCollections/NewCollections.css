@@ -1,122 +1,59 @@
-.new-collections {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  height: 90vh;
-}
-.new-collections h1 {
-  color: #171717;
-  font-size: 50px;
-  font-weight: 600;
-}
-.new-collections hr {
-  width: 200px;
-  height: 6px;
-  border-radius: 10px;
-  background: #252525;
-}
-.collections {
-  margin-top: 50px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 30px;
-}
 .new-collection {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 60px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.new-collection h1 {
-  font-size: 36px;
-  font-weight: 700;
-  color: #171717;
-  margin: 0;
-}
-
-.new-collection hr {
-  width: 80px;
-  height: 5px;
-  border: none;
-  border-radius: 10px;
-  background: #ff4141;
-  margin: 14px 0 48px;
-}
-
-.collections {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 32px 28px;
-}
-
-.new-collection {
-  max-width: 1280px;
+  max-width: 1320px;
   margin: 0 auto;
-  padding: 60px 24px;
+  padding: 65px 0;
+
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .new-collection h1 {
+  margin: 0;
   font-size: 36px;
   font-weight: 700;
   color: #171717;
-  margin: 0;
   text-align: center;
 }
 
 .new-collection hr {
-  width: 80px;
-  height: 5px;
+  width: 75px;
+  height: 4px;
+  margin: 15px 0 35px;
   border: none;
   border-radius: 10px;
   background: #ff4141;
-  margin: 14px 0 48px;
 }
 
 .collections {
-  width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 32px 28px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
 }
 
-/* Tablets: smaller cards so 3 fit across */
-@media (max-width: 1024px) {
+@media (max-width: 1050px) {
   .new-collection {
-    padding: 48px 24px;
-  }
-
-  .collections {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 28px 20px;
-  }
-}
-
-/* Phones: 2 columns */
-@media (max-width: 600px) {
-  .new-collection {
-    padding: 32px 12px;
-  }
-
-  .new-collection h1 {
-    font-size: 26px;
-  }
-
-  .new-collection hr {
-    width: 60px;
-    height: 4px;
-    margin: 10px 0 28px;
+    padding: 45px 0;
   }
 
   .collections {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px 12px;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .new-collection {
+    padding: 35px 0;
+  }
+
+  .new-collection h1 {
+    font-size: 25px;
+  }
+
+  .collections {
+    gap: 15px 10px;
   }
 }

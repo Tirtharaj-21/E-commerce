@@ -1,102 +1,74 @@
+
 .relatedproducts {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  height: 90vh;
+
+  width: 100%;
+  max-width: 1200px;
+  min-width: 0;
+
+  height: auto;
+  margin: 45px auto 30px;
+  padding: 0 12px;
+
+  gap: 12px;
 }
+
 .relatedproducts h1 {
+  margin: 0;
+
   color: #171717;
-  font-size: 50px;
-  font-weight: 600;
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 700;
+  text-align: center;
 }
+
 .relatedproducts hr {
-  width: 200px;
-  height: 6px;
+  width: 150px;
+  height: 4px;
+  margin: 5px 0 15px;
+
+  background: #ddd;
+  border: none;
   border-radius: 10px;
 }
+
 .relatedproducts-item {
-  margin-top: 50px;
-  display: flex;
-  gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  width: 100%;
+  min-width: 0;
+
+  margin: 15px 0 0;
+  gap: 20px;
 }
-/* Tablet layout */
-@media (max-width: 1024px) {
-  .relatedproducts {
-    height: auto;
-    min-height: auto;
-    padding: 30px 25px;
-    gap: 10px;
-  }
 
-  .relatedproducts h1 {
-    font-size: 38px;
-    text-align: center;
-  }
+.relatedproducts-item > * {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
 
-  .relatedproducts hr {
-    max-width: 160px;
-  }
-
+@media (max-width: 900px) {
   .relatedproducts-item {
-    width: 100%;
-    margin-top: 30px;
-    display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-    justify-items: center;
-  }
-
-  .relatedproducts-item > * {
-    min-width: 0;
-    max-width: 100%;
+    gap: 16px;
   }
 }
 
-/* Mobile layout */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .relatedproducts {
-    height: auto;
-    padding: 25px 15px;
-    gap: 8px;
-  }
-
-  .relatedproducts h1 {
-    font-size: 28px;
-    line-height: 1.3;
-    text-align: center;
-  }
-
-  .relatedproducts hr {
-    width: 120px;
-    height: 4px;
+    margin: 30px auto;
   }
 
   .relatedproducts-item {
-    width: 100%;
-    margin-top: 20px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px 12px;
-  }
-
-  .relatedproducts-item > * {
-    width: 100%;
-    min-width: 0;
-  }
-}
-
-/* Small mobile screens */
-@media (max-width: 400px) {
-  .relatedproducts {
-    padding: 20px 10px;
+    gap: 14px;
   }
 
   .relatedproducts h1 {
-    font-size: 24px;
-  }
-
-  .relatedproducts-item {
-    gap: 16px 8px;
-    margin-top: 18px;
+    font-size: 26px;
   }
 }

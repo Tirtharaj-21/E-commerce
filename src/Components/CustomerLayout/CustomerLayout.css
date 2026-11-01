@@ -1,0 +1,159 @@
+
+:root {
+  --customer-sidebar-width: 250px;
+}
+
+/* Main layout */
+.customer-layout {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #f7f8fa;
+}
+
+.customer-layout-body {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  align-items: stretch;
+}
+
+/* Sidebar */
+.customer-sidebar-area {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+
+  flex: 0 0 var(--customer-sidebar-width);
+  width: var(--customer-sidebar-width);
+
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  background: #ffffff;
+  border-right: 1px solid #eeeeee;
+
+  z-index: 100;
+  scrollbar-width: thin;
+}
+
+/* Main content */
+.customer-main-content {
+  flex: 1;
+  min-width: 0;
+  width: 0;
+  padding: 0 30px 35px;
+  position: relative;
+}
+
+/* Toolbar - no extra vertical space */
+.customer-content-toolbar {
+  height: 0;
+  position: relative;
+  z-index: 110;
+}
+
+.sidebar-toggle {
+  position: absolute;
+  top: 8px;
+  right: 0;
+
+  padding: 9px 15px;
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+
+  color: #333333;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.sidebar-toggle:hover {
+  border-color: #ff4141;
+  color: #ff4141;
+}
+
+/* Page content */
+.customer-page-content {
+  width: 100%;
+  max-width: 1600px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  :root {
+    --customer-sidebar-width: 220px;
+  }
+
+  .customer-main-content {
+    padding: 0 18px 30px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .customer-layout-body {
+    flex-direction: column;
+  }
+
+  .customer-sidebar-area {
+    position: relative;
+    top: auto;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    flex: none;
+    overflow: visible;
+    border-right: none;
+    border-bottom: 1px solid #eeeeee;
+  }
+
+  .customer-main-content {
+    width: 100%;
+    padding: 0 14px 25px;
+  }
+}
+
+/* Prevent horizontal overflow across customer pages */
+.customer-layout,
+.customer-layout-body,
+.customer-main-content,
+.customer-page-content {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.customer-layout {
+  overflow-x: clip;
+}
+
+/* Remove unnecessary toolbar spacing */
+.customer-content-toolbar {
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.customer-sidebar-area {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  height: 100vh;
+  flex-shrink: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+@media (max-width: 700px) {
+  .customer-sidebar-area {
+    position: relative;
+    height: auto;
+    overflow: visible;
+  }
+}

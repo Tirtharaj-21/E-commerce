@@ -1,119 +1,59 @@
 .popular {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  height: 90vh;
-}
-.popular h1 {
-  color: #171717;
-  font-size: 50px;
-  font-weight: 600;
-}
-.popular hr {
-  width: 200px;
-  height: 6px;
-  border-radius: 10px;
-  background: #252525;
-}
-.popular-item{
-  margin-top: 50px;
-  display: flex;
-  gap: 30px;
-}
-.popular {
-  max-width: 1280px;
+  width: 100%;
+  max-width: 1320px;
   margin: 0 auto;
-  padding: 60px 24px;
+  padding: 65px 0;
+
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .popular h1 {
+  margin: 0;
   font-size: 36px;
   font-weight: 700;
   color: #171717;
-  margin: 0;
+  text-align: center;
 }
 
 .popular hr {
-  width: 80px;
-  height: 5px;
+  width: 75px;
+  height: 4px;
+  margin: 15px 0 35px;
   border: none;
   border-radius: 10px;
   background: #ff4141;
-  margin: 14px 0 48px;
 }
 
 .popular-item {
-  width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 32px 28px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
 }
 
-/* Tablet layout */
-@media (max-width: 1024px) {
+@media (max-width: 1050px) {
   .popular {
-    height: auto;
-    padding: 45px 20px;
-  }
-
-  .popular h1 {
-    font-size: 32px;
-    text-align: center;
-  }
-
-  .popular hr {
-    margin-bottom: 30px;
+    padding: 45px 0;
   }
 
   .popular-item {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 25px 20px;
-    margin-top: 25px;
+    gap: 20px;
   }
 }
 
-/* Mobile layout */
 @media (max-width: 600px) {
   .popular {
-    height: auto;
-    padding: 30px 15px;
-    gap: 8px;
+    padding: 35px 0;
   }
 
   .popular h1 {
-    font-size: clamp(22px, 5.5vw, 30px);
-    text-align: center;
-  }
-
-  .popular hr {
-    width: 65px;
-    height: 4px;
-    margin: 10px 0 25px;
+    font-size: 25px;
   }
 
   .popular-item {
-    width: 100%;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px 12px;
-    margin-top: 10px;
-  }
-}
-
-/* Extra-small mobile screens */
-@media (max-width: 360px) {
-  .popular {
-    padding: 25px 10px;
-  }
-
-  .popular h1 {
-    font-size: 21px;
-  }
-
-  .popular-item {
-    gap: 16px 8px;
+    gap: 15px 10px;
   }
 }

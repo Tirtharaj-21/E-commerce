@@ -4,171 +4,133 @@ import {
   Routes,
   Route,
   Navigate,
-  useLocation,
 } from "react-router-dom";
 
-import Navbar from "./Components/Navbar/Navbar";
-import Footer from "./Components/Footer/Footer";
-
+// Context
 import { AuthProvider, useAuth } from "./Context/AuthContext";
+
+// Route configuration
 import { Routhpath } from "./Components/Routh/Routhpath";
 
+// Layout
+import CustomerLayout from "./Components/CustomerLayout/CustomerLayout";
+
+// Pages
 import Shop from "./Pages/Shop";
 import ShopCategory from "./Pages/ShopCategory";
 import Product from "./Pages/Product";
 import Cart from "./Pages/Cart";
 import Signup from "./Pages/Signup";
 import LoginSignup from "./Pages/LoginSignup";
+import Checkout from "./Pages/Checkout";
 
 import AdminDashboard from "./Pages/Dashboard/AdminDashboard";
 import CustomerDashboard from "./Pages/Dashboard/CustomerDashboard";
 
+// Route protection
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 
+// Category banners
 import men_banner from "./Components/Assets/banner_mens.png";
 import women_banner from "./Components/Assets/banner_women.png";
 import kid_banner from "./Components/Assets/banner_kids.png";
+import MyOrders from "./Pages/MyOrders/MyOrders";
+import Wishlist from "./Pages/Wishlist/Wishlist";
+import Profile from "./Pages/Profile/Profile";
+import Addresses from "./Pages/Addresses/Addresses";
 
 function AppContent() {
-  const { isLoggedIn } = useAuth();
-  const location = useLocation();
+  const { isLoggedIn, role } = useAuth();
 
-  const isLoginPage =
-    location.pathname === Routhpath.login || location.pathname === "/login";
-
-  const isSignupPage = location.pathname === "/signup";
-  const isAuthPage = isLoginPage || isSignupPage;
+  const defaultPath = isLoggedIn
+    ? role === "ADMIN"
+      ? Routhpath.adminDashboard
+      : Routhpath.customerDashboard
+    : Routhpath.login;
 
   return (
-    <>
-      {!isAuthPage && isLoggedIn && <Navbar />}
+    <Routes>
+      {/* Default route */}
+      <Route path="/" element={<Navigate to={defaultPath} replace />} />
 
-      <Routes>
-        {/* Default route */}
-        <Route
-          path="/"
-          element={
-            isLoggedIn ? (
-              <Navigate to={Routhpath.shop} replace />
-            ) : (
-              <Navigate to={Routhpath.login} replace />
-            )
-          }
-        />
+      {/* Authentication routes */}
+      <Route
+        path={Routhpath.login}
+        element={
+          isLoggedIn ? <Navigate to={defaultPath} replace /> : <LoginSignup />
+        }
+      />
 
-        {/* Authentication */}
-        <Route
-          path="/login"
-          element={
-            isLoggedIn ? (
-              <Navigate to={Routhpath.shop} replace />
-            ) : (
-              <LoginSignup />
-            )
-          }
-        />
+      <Route
+        path="/signup"
+        element={
+          isLoggedIn ? <Navigate to={defaultPath} replace /> : <Signup />
+        }
+      />
 
+      {/* Customer routes with shared layout */}
+      <Route
+        element={
+          <ProtectedRoute allowedRoles={["CUSTOMER"]}>
+            <CustomerLayout />
+          </ProtectedRoute>
+        }
+      >
+        {/* Customer dashboard */}
         <Route
-          path="/signup"
-          element={
-            isLoggedIn ? <Navigate to={Routhpath.shop} replace /> : <Signup />
-          }
+          path={Routhpath.customerDashboard}
+          element={<CustomerDashboard />}
         />
 
         {/* Shop */}
-        <Route
-          path={Routhpath.shop}
-          element={
-            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
-              <Shop />
-            </ProtectedRoute>
-          }
-        />
+        <Route path={Routhpath.shop} element={<Shop />} />
 
-        {/* Men */}
+        {/* Men category */}
         <Route
           path={Routhpath.men}
-          element={
-            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
-              <ShopCategory banner={men_banner} category="men" />
-            </ProtectedRoute>
-          }
+          element={<ShopCategory banner={men_banner} category="men" />}
         />
 
-        {/* Women */}
+        {/* Women category */}
         <Route
           path={Routhpath.women}
-          element={
-            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
-              <ShopCategory banner={women_banner} category="women" />
-            </ProtectedRoute>
-          }
+          element={<ShopCategory banner={women_banner} category="women" />}
         />
 
-        {/* Kids */}
+        {/* Kids category */}
         <Route
           path={Routhpath.kids}
-          element={
-            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
-              <ShopCategory banner={kid_banner} category="kid" />
-            </ProtectedRoute>
-          }
+          element={<ShopCategory banner={kid_banner} category="kid" />}
         />
 
         {/* Product details */}
-        <Route
-          path="/product/:productId"
-          element={
-            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
-              <Product />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/product/:productId" element={<Product />} />
 
         {/* Cart */}
-        <Route
-          path={Routhpath.cart}
-          element={
-            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
-              <Cart />
-            </ProtectedRoute>
-          }
-        />
+        <Route path={Routhpath.cart} element={<Cart />} />
 
-        {/* Customer dashboard */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
-              <CustomerDashboard />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/my-orders" element={<MyOrders />} />
+        <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/addresses" element={<Addresses />} />
 
-        {/* Admin dashboard */}
-        <Route
-          path="/admin/dashboard"
-          element={
-            <ProtectedRoute allowedRoles={["ADMIN"]}>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
+        {/* Checkout */}
+        <Route path="/checkout" element={<Checkout />} />
+      </Route>
 
-        {/* Unknown URL */}
-        <Route
-          path="*"
-          element={
-            <Navigate
-              to={isLoggedIn ? Routhpath.shop : Routhpath.login}
-              replace
-            />
-          }
-        />
-      </Routes>
+      {/* Admin routes - separate from customer layout */}
+      <Route
+        path={Routhpath.adminDashboard}
+        element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
 
-      {!isAuthPage && isLoggedIn && <Footer />}
-    </>
+      {/* Unknown routes */}
+      <Route path="*" element={<Navigate to={defaultPath} replace />} />
+    </Routes>
   );
 }
 

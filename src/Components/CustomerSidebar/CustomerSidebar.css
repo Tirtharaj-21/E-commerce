@@ -1,0 +1,153 @@
+.customer-sidebar {
+  width: 100%;
+  min-height: 100%;
+  padding: 25px 15px;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 10px 8px 25px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.sidebar-avatar {
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #ff4141;
+  color: white;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.sidebar-user-info {
+  min-width: 0;
+}
+
+.sidebar-user h3 {
+  font-size: 14px;
+  color: #171717;
+  font-weight: 650;
+  margin: 0;
+}
+
+.sidebar-user p {
+  font-size: 12px;
+  color: #888888;
+  margin-top: 5px;
+}
+
+.sidebar-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sidebar-link {
+  width: 100%;
+  min-height: 45px;
+  padding: 11px 13px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: #555555;
+  font-family: inherit;
+  font-size: 14px;
+  text-decoration: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.sidebar-link:hover {
+  background: #fff3f2;
+  color: #ff4141;
+}
+
+.sidebar-link.active {
+  background: #fff0ef;
+  color: #ff4141;
+  font-weight: 600;
+}
+
+.sidebar-icon {
+  width: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.sidebar-arrow {
+  margin-left: auto;
+}
+
+.sidebar-submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 3px 0 10px 22px;
+  padding-left: 12px;
+  border-left: 1px solid #eeeeee;
+}
+
+.sidebar-submenu .sidebar-link {
+  min-height: 40px;
+  font-size: 13px;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding-top: 25px;
+}
+
+.sidebar-logout {
+  width: 100%;
+  min-height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid #ffd0d0;
+  border-radius: 9px;
+  background: white;
+  color: #ff4141;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.sidebar-logout:hover {
+  background: #ff4141;
+  color: white;
+}
+
+@media (max-width: 700px) {
+  .customer-sidebar {
+    padding: 15px;
+  }
+
+  .sidebar-navigation {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sidebar-bottom {
+    padding-top: 15px;
+  }
+}

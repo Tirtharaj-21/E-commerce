@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import "./Navbar.css";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -10,83 +10,73 @@ import logo from "../Assets/logo.png";
 import cart from "../Assets/cart_icon.png";
 
 export default function Navbar() {
-  const [menu, setMenu] = useState("Shop");
-
   const { getTotalCartItems } = useContext(ShopContext);
   const { isAuthenticated, user, role, logout } = useAuth();
 
   const navigate = useNavigate();
 
+  const isCustomer = isAuthenticated && role === "CUSTOMER";
+
   const handleLogout = async () => {
-    await logout();
-    navigate(Routhpath.login, { replace: true });
+    try {
+      await logout();
+      navigate(Routhpath.login, { replace: true });
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   const dashboardPath =
     role === "ADMIN" ? Routhpath.adminDashboard : Routhpath.customerDashboard;
 
   return (
-    <div className="navbar">
-      <div className="nav-logo">
-        <img src={logo} alt="home-logo" />
+    <header className="navbar">
+      <Link to={Routhpath.home} className="nav-logo">
+        <img src={logo} alt="SHOPPER logo" />
         <p>SHOPPER</p>
-      </div>
+      </Link>
 
-      <ul className="nav-menu">
-        <li onClick={() => setMenu("Shop")}>
-          <Link style={{ textDecoration: "none" }} to={Routhpath.home}>
-            Shop
-          </Link>
-          {menu === "Shop" && <hr />}
-        </li>
-
-        <li onClick={() => setMenu("Men")}>
-          <Link style={{ textDecoration: "none" }} to={Routhpath.men}>
-            Men
-          </Link>
-          {menu === "Men" && <hr />}
-        </li>
-
-        <li onClick={() => setMenu("Women")}>
-          <Link style={{ textDecoration: "none" }} to={Routhpath.women}>
-            Women
-          </Link>
-          {menu === "Women" && <hr />}
-        </li>
-
-        <li onClick={() => setMenu("Kids")}>
-          <Link style={{ textDecoration: "none" }} to={Routhpath.kids}>
-            Kids
-          </Link>
-          {menu === "Kids" && <hr />}
-        </li>
-      </ul>
+      {/* Customer shopping links are already in the sidebar */}
+      {!isCustomer && (
+        <nav className="nav-menu">
+          <Link to={Routhpath.home}>Shop</Link>
+          <Link to={Routhpath.men}>Men</Link>
+          <Link to={Routhpath.women}>Women</Link>
+          <Link to={Routhpath.kids}>Kids</Link>
+        </nav>
+      )}
 
       <div className="nav-login-cart">
         {isAuthenticated ? (
           <div className="nav-auth">
-            <Link style={{ textDecoration: "none" }} to={dashboardPath}>
-              <button>Hi, {user?.name?.split(" ")[0] || "Account"}</button>
+            <Link to={dashboardPath} className="nav-account-link">
+              Hi, {user?.name?.split(" ")[0] || "Account"}
             </Link>
 
-            <button onClick={handleLogout} className="nav-logout-btn">
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="nav-logout-btn"
+            >
               Logout
             </button>
           </div>
         ) : (
-          <Link style={{ textDecoration: "none" }} to={Routhpath.login}>
-            <button>Login</button>
+          <Link to={Routhpath.login} className="nav-login-link">
+            Login
           </Link>
         )}
 
-        <div id="nav-cart">
-          <Link style={{ textDecoration: "none" }} to={Routhpath.cart}>
-            <img src={cart} alt="cart" />
-          </Link>
-
-          <div className="nav-cart-count">{getTotalCartItems()}</div>
-        </div>
+        <button
+          type="button"
+          className="nav-cart-button"
+          onClick={() => navigate(Routhpath.cart)}
+          aria-label="Open shopping cart"
+        >
+          <img src={cart} alt="" />
+          <span>{getTotalCartItems()}</span>
+        </button>
       </div>
-    </div>
+    </header>
   );
 }

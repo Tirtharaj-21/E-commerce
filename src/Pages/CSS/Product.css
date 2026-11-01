@@ -1,0 +1,33 @@
+
+.customer-product-page {
+  width: 100%;
+  max-width: 1400px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 5px 0 40px;
+  box-sizing: border-box;
+}
+
+.customer-product-page * {
+  box-sizing: border-box;
+}
+
+.product-loading {
+  min-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #555;
+}
+
+/* Prevent unwanted horizontal overflow */
+.customer-product-page img {
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .customer-product-page {
+    padding: 5px 0 25px;
+  }
+}
