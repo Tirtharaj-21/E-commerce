@@ -11,6 +11,7 @@ export default function LoginSignup() {
     email: "",
     password: "",
   });
+
   const [agreed, setAgreed] = useState(false);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -68,42 +69,74 @@ export default function LoginSignup() {
     }
   };
 
+  const changeMode = (newMode) => {
+    setError("");
+    setMode(newMode);
+  };
+
   return (
     <div className="loginsignup">
       <div className="loginsignup-container">
-        <h1>{mode === "login" ? "Login" : "Sign up"}</h1>
+        <div className="loginsignup-header">
+          <span className="loginsignup-label">WELCOME TO SHOPPER</span>
+
+          <h1>{mode === "login" ? "Welcome back!" : "Create your account"}</h1>
+
+          <p>
+            {mode === "login"
+              ? "Enter your details to access your account."
+              : "Join us and discover your favourite products."}
+          </p>
+        </div>
 
         <form onSubmit={handleSubmit}>
           <div className="loginsignup-fields">
             {mode === "signup" && (
-              <input
-                type="text"
-                name="name"
-                placeholder="Your name"
-                value={form.name}
-                onChange={handleChange}
-                required
-              />
+              <div className="loginsignup-field">
+                <label htmlFor="name">Full Name</label>
+                <input
+                  id="name"
+                  type="text"
+                  name="name"
+                  placeholder="Enter your full name"
+                  value={form.name}
+                  onChange={handleChange}
+                  autoComplete="name"
+                  required
+                />
+              </div>
             )}
 
-            <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              value={form.email}
-              onChange={handleChange}
-              required
-            />
+            <div className="loginsignup-field">
+              <label htmlFor="email">Email Address</label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                value={form.email}
+                onChange={handleChange}
+                autoComplete="email"
+                required
+              />
+            </div>
 
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={form.password}
-              onChange={handleChange}
-              minLength={6}
-              required
-            />
+            <div className="loginsignup-field">
+              <label htmlFor="password">Password</label>
+              <input
+                id="password"
+                type="password"
+                name="password"
+                placeholder="Enter your password"
+                value={form.password}
+                onChange={handleChange}
+                minLength={6}
+                autoComplete={
+                  mode === "login" ? "current-password" : "new-password"
+                }
+                required
+              />
+            </div>
           </div>
 
           {error && (
@@ -120,52 +153,55 @@ export default function LoginSignup() {
                 checked={agreed}
                 onChange={(event) => setAgreed(event.target.checked)}
               />
+
               <label htmlFor="agree">
-                By continuing, I agree to the terms of use and privacy policy.
+                I agree to the terms of use and privacy policy.
               </label>
             </div>
           )}
 
-          <button type="submit" disabled={submitting}>
+          <button
+            type="submit"
+            disabled={submitting}
+            className="loginsignup-submit"
+          >
             {submitting
               ? "Please wait..."
               : mode === "login"
-                ? "Login"
+                ? "Login to Account"
                 : "Create Account"}
           </button>
         </form>
 
-        <p className="loginsignup-login">
+        <div className="loginsignup-footer">
           {mode === "login" ? (
-            <>
+            <p>
               Don't have an account?{" "}
-              <span
-                onClick={() => {
-                  setError("");
-                  setMode("signup");
-                }}
+              <button
+                type="button"
+                className="loginsignup-switch"
+                onClick={() => changeMode("signup")}
               >
-                Sign up here
-              </span>
-            </>
+                Sign up
+              </button>
+            </p>
           ) : (
-            <>
+            <p>
               Already have an account?{" "}
-              <span
-                onClick={() => {
-                  setError("");
-                  setMode("login");
-                }}
+              <button
+                type="button"
+                className="loginsignup-switch"
+                onClick={() => changeMode("login")}
               >
-                Login here
-              </span>
-            </>
+                Login
+              </button>
+            </p>
           )}
-        </p>
 
-        <p>
-          <Link to="/signup">Open the separate signup page</Link>
-        </p>
+          <Link to="/signup" className="loginsignup-separate-link">
+            Open separate signup page
+          </Link>
+        </div>
       </div>
     </div>
   );
