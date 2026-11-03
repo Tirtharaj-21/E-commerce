@@ -16,17 +16,27 @@ export default function Signup() {
   const handleSignup = async (event) => {
     event.preventDefault();
     setError("");
+    setSuccess("");
     setSubmitting(true);
 
     try {
-      // signup() is async: it creates the account and logs the user in.
-      const user = await signup(name, email, password);
+      const response = await signup(name, email, password);
 
-      navigate(user?.role === "ADMIN" ? "/admin/dashboard" : "/shop", {
-        replace: true,
-      });
+      setSuccess(response?.message || "Registration successful!");
+
+      // Registration does not automatically authenticate the user.
+      setTimeout(() => {
+        navigate("/login", {
+          replace: true,
+          state: { message: "Account created successfully. Please log in." },
+        });
+      }, 1000);
     } catch (err) {
-      setError(err?.message || "Something went wrong. Please try again.");
+      setError(
+        err?.response?.data?.message ||
+          err?.message ||
+          "Something went wrong. Please try again.",
+      );
     } finally {
       setSubmitting(false);
     }
@@ -68,6 +78,12 @@ export default function Signup() {
           {error && (
             <p style={{ color: "red" }} role="alert">
               {error}
+            </p>
+          )}
+
+          {success && (
+            <p style={{ color: "green" }} role="status">
+              {success}
             </p>
           )}
 
